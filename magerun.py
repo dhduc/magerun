@@ -2,6 +2,7 @@
 import sys
 import subprocess
 import optparse
+import string
 
 class color:
     FAIL = '\033[91m'
@@ -21,15 +22,61 @@ class color:
 class Magegun :
     param = 0
     theme = ''
-    commands = {}
+    sections = {}
 
     def init(self) :
-        commands = {
-            '1. Restart FPM',
-            '2. Restart Apache',
-            '3. Restart Nginx',
-        }
-        self.commands = commands
+        sections = [
+            [
+                'server', 
+                [
+                    [1, 'restart fpm service', 'sudo service php7.0-fpm restart', ''],
+                    [2, 'restart apache server', 'sudo service apache2 restart', ''],
+                    [3, 'restart nginx server', 'sudo service nginx restart', '']
+                ]
+            ],
+            [
+                'database',
+                [
+                    [4, 'enable module', 'php bin/magento module:enable', 'module'],
+                    [5, 'disable module', 'php bin/magento disable:enable', 'module'],
+                    [6, 'enable all module', 'php bin/magento module:enable --all --clear-static-content', ''],
+                    [7, 'setup upgrade schema', 'php bin/magento setup:upgrade', ''],
+                    [8, 'compile DI', 'php bin/magento setup:di:compile-multi-tenant', '']
+                ]
+            ],
+            [
+                'deploy',
+                [
+                    [9, 'remove generated files in var folder', 'rm -rf var/cache var/generation var/page_cache var/tmp var/view_preprocessed', ''],
+                    [10, 'remove all static files', 'rm -rf pub/static', ''],
+                    [11, 'deploy static content', 'php bin/magento setup:static-content:deploy', 'locale']
+                ]
+            ],
+            [
+                'grunt',
+                [
+                    [12, 'remove theme related static files', 'grunt clean:', 'theme'],
+                    [13, 'republish theme related static files', 'grunt exec:', 'theme'],
+                    [14, 'compile theme less files', 'grunt less:', 'theme']
+                ]
+            ],
+            [
+                'indexer and cache',
+                [
+                    [15, 'reindex data', 'php bin/magento indexer:reindex', ''],
+                    [16, 'clear cache', 'php bin/magento cache:clean', ''],
+                    [17, 'flush cache', 'php bin/magento cache:flush', '']
+                ]
+            ],
+            [
+                'custom',
+                [
+                    [18, 'custom command', 'php bin/magento', '']
+                ],
+            ]
+        ]
+
+        self.sections = sections
 
     def option(self) :
         parser = optparse.OptionParser()
@@ -47,13 +94,23 @@ class Magegun :
 
     # Menu
     def menu(self) :
-        commands = self.commands
-        for command in commands :
-            print color.GREEN + command
+        sections = self.sections
+        for section in sections :
+            print color.YELLOW + section[0].capitalize() + ''
+            for number, title, command, option in section[1] :
+                print color.GREEN + '  ' + str(number).capitalize() + '. ' + title + color.ENDC 
 
     def getParam(self) :
         print color.RED
-        param = int(raw_input('You chose: '))
+        param = raw_input('You chose: ')
+        try :
+            param = int(param)
+            if (param < 0) or (param > 17) :
+                print color.RED + 'Option not valid' + color.ENDC
+                return 
+        except ValueError:
+            print color.RED + 'Option not valid' + color.ENDC 
+           
         print color.ENDC
         self.param = param
 
@@ -67,109 +124,19 @@ class Magegun :
 
     def execute(self) :
         param = self.param
-        # commands = self.commands
-        # keys = commands.keys()
-        # values = commands.values()
-        if param == 1 :
-            self.clearCache()
-        elif param == 2 :
-            self.flushCache()
-        else :
-            print color.RED + 'Not valid'
-
-    def restartFpm():
-        command = 'sudo service php7.0-fpm restart'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Restart FPM service successful' 
-
-    def restartApache():
-        command = 'sudo service apache2 restart'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Restart apache server successful'            
-
-    def restartNginx():
-        command = 'sudo service nginx restart'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Restart nginx server successful'
-
-    def reindexData(self) :
-        command = 'php bin/magento indexer:reindex'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Reindex data successful'
-                
-    def clearCache(self) :
-        command = 'php bin/magento cache:clean'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Clear cache successful'
-
-    def flushCache(self) :
-        command = 'php bin/magento cache:flush'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Flush cache successful'
-
-    def removeVar() :
-        command = 'rm -rf var/cache var/page_cache var/generation var/view_preprocessed'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Remove var files successful'
-
-    def removeStatic() :
-        theme = raw_input('Theme : ')
-        command = 'grunt clean:' + theme
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Clean static files successful'
-
-    def republishStatic() :
-        theme = raw_input('Theme : ')
-        command = 'grunt exec:' + theme
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Republish static files successful'
-
-    def compileLess() :
-        theme = raw_input('Theme : ')
-        command = 'grunt less:' + theme
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Compile less files successful'
-
-    def enableModule():
-        command = 'php bin/magento module:enable --all --clear-static-content'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Flush cache successful'                                            
-
-    def setupUpgrade():
-        command = 'php bin/magento setup:upgrade'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Flush cache successful'
-    
-    def setupContent():
-        command = 'php bin/magento kingliving:setup'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Flush cache successful'
-
-    def compileDI():
-        command = 'php bin/magento setup:di:compile-multi-tenant'
-        subprocess.call(command, shell=True)
-        print color.GREEN
-        print 'Flush cache successful'
-        
-    def deployContent():
-        locale = raw_input('Locale: ')
-        command = 'php bin/magento setup:static-content:deploy' + locale
-        subprocess.call('php bin/magento cache:flush', shell=True)
-        print color.GREEN
-        print 'Flush cache successful'                
+        sections = self.sections
+        for section in sections :
+            area = section[0]
+            for number, title, command, option in section[1] :   
+                if param == number :
+                    if option != '':
+                        question = 'What '+ option +' you want to execute: '
+                        _option = raw_input(question)
+                        subprocess.call(command + ' ' + _option, shell=True)
+                        print color.GREEN + title.capitalize() + ' for ' + _option + ' ' + option + ' successful'
+                    else :
+                        subprocess.call(command, shell=True)
+                        print color.GREEN + title.capitalize() + ' successful'
 
 magegun = Magegun() 
 magegun.run()
