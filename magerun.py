@@ -29,49 +29,49 @@ class Magegun :
             [
                 'server', 
                 [
-                    [1, 'restart fpm service', 'sudo service php7.0-fpm restart', ''],
-                    [2, 'restart apache server', 'sudo service apache2 restart', ''],
-                    [3, 'restart nginx server', 'sudo service nginx restart', '']
+                    ['restart fpm service', 'sudo service php7.0-fpm restart', ''],
+                    ['restart apache server', 'sudo service apache2 restart', ''],
+                    ['restart nginx server', 'sudo service nginx restart', '']
                 ]
             ],
             [
                 'database',
                 [
-                    [4, 'enable module', 'php bin/magento module:enable', 'module'],
-                    [5, 'disable module', 'php bin/magento disable:enable', 'module'],
-                    [6, 'enable all module', 'php bin/magento module:enable --all --clear-static-content', ''],
-                    [7, 'setup upgrade schema', 'php bin/magento setup:upgrade', ''],
-                    [8, 'compile DI', 'php bin/magento setup:di:compile-multi-tenant', '']
+                    ['enable module', 'php bin/magento module:enable', 'module'],
+                    ['disable module', 'php bin/magento disable:enable', 'module'],
+                    ['enable all module', 'php bin/magento module:enable --all --clear-static-content', ''],
+                    ['setup upgrade schema', 'php bin/magento setup:upgrade', ''],
+                    ['compile DI', 'php bin/magento setup:di:compile-multi-tenant', '']
                 ]
             ],
             [
                 'deploy',
                 [
-                    [9, 'remove generated files in var folder', 'rm -rf var/cache var/generation var/page_cache var/tmp var/view_preprocessed', ''],
-                    [10, 'remove all static files', 'rm -rf pub/static', ''],
-                    [11, 'deploy static content', 'php bin/magento setup:static-content:deploy', 'locale']
+                    ['remove generated files in var folder', 'rm -rf var/cache var/generation var/page_cache var/tmp var/view_preprocessed', ''],
+                    ['remove all static files', 'rm -rf pub/static', ''],
+                    ['deploy static content', 'php bin/magento setup:static-content:deploy', 'locale']
                 ]
             ],
             [
                 'grunt',
                 [
-                    [12, 'remove theme related static files', 'grunt clean:', 'theme'],
-                    [13, 'republish theme related static files', 'grunt exec:', 'theme'],
-                    [14, 'compile theme less files', 'grunt less:', 'theme']
+                    ['remove theme related static files', 'grunt clean:', 'theme'],
+                    ['republish theme related static files', 'grunt exec:', 'theme'],
+                    ['compile theme less files', 'grunt less:', 'theme']
                 ]
             ],
             [
                 'indexer and cache',
                 [
-                    [15, 'reindex data', 'php bin/magento indexer:reindex', ''],
-                    [16, 'clear cache', 'php bin/magento cache:clean', ''],
-                    [17, 'flush cache', 'php bin/magento cache:flush', '']
+                    ['reindex data', 'php bin/magento indexer:reindex', ''],
+                    ['clear cache', 'php bin/magento cache:clean', ''],
+                    ['flush cache', 'php bin/magento cache:flush', '']
                 ]
             ],
             [
                 'custom',
                 [
-                    [18, 'custom command', 'php bin/magento', '']
+                    ['custom command', 'php bin/magento', '']
                 ],
             ]
         ]
@@ -95,19 +95,22 @@ class Magegun :
     # Menu
     def menu(self) :
         sections = self.sections
+        number = 0
         for section in sections :
             print color.YELLOW + section[0].capitalize() + ''
-            for number, title, command, option in section[1] :
+            for title, command, option in section[1] :
+            	number = number + 1
                 print color.GREEN + '  ' + str(number).capitalize() + '. ' + title + color.ENDC 
+        
+        # Close program
+        print color.YELLOW + 'Close' + color.ENDC
+        print color.RED + '  ' +'0. Close program' + color.ENDC
 
     def getParam(self) :
         print color.RED
         param = raw_input('You chose: ')
         try :
             param = int(param)
-            if (param < 0) or (param > 17) :
-                print color.RED + 'Option not valid' + color.ENDC
-                return 
         except ValueError:
             print color.RED + 'Option not valid' + color.ENDC 
            
@@ -119,15 +122,25 @@ class Magegun :
         self.option()
         self.title()
         self.menu()
+        self.loop()
+
+    def loop(self) :
         self.getParam()
-        self.execute()
+        param = self.param
+        if param != 0 :
+        	self.execute()
+        	self.loop()
+        else :
+        	print color.GREEN + 'Close program' + color.ENDC	   
 
     def execute(self) :
         param = self.param
         sections = self.sections
+        number = 0
         for section in sections :
             area = section[0]
-            for number, title, command, option in section[1] :   
+            for title, command, option in section[1] : 
+            	number = number + 1  
                 if param == number :
                     if option != '':
                         question = 'What '+ option +' you want to execute: '
