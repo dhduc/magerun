@@ -3,6 +3,8 @@ import sys
 import subprocess
 import optparse
 import string
+import os
+from datetime import datetime
 
 class color:
     FAIL = '\033[91m'
@@ -19,10 +21,12 @@ class color:
     LIGHTGRAY = '\033[97m'
     BLACK = '\033[98m'
 
-class Magegun :
+class Magerun :
     param = 0
     theme = ''
     sections = {}
+    folder = ''
+    pwd = ''
 
     def init(self) :
         sections = [
@@ -71,7 +75,7 @@ class Magegun :
             [
                 'custom',
                 [
-                    ['custom command', 'php bin/magento', '']
+                    ['custom command', 'php bin/magento', 'custom command']
                 ],
             ]
         ]
@@ -106,7 +110,15 @@ class Magegun :
         print color.YELLOW + 'Close' + color.ENDC
         print color.RED + '  ' +'0. Close program' + color.ENDC
 
-    def getParam(self) :
+    def setFolder(self) :
+        folder = raw_input('The folder of project')
+        self.folder = folder
+
+    def getFolder(self) :
+        pwd = os.getCwd()
+        self.pwd = pwd        
+
+    def setParam(self) :
         print color.RED
         param = raw_input('You chose: ')
         try :
@@ -120,12 +132,12 @@ class Magegun :
     def run(self) :
         self.init()
         self.option()
-        self.title()
-        self.menu()
         self.loop()
 
     def loop(self) :
-        self.getParam()
+        self.title()
+        self.menu()
+        self.setParam()
         param = self.param
         if param != 0 :
         	self.execute()
@@ -136,6 +148,7 @@ class Magegun :
     def execute(self) :
         param = self.param
         sections = self.sections
+        now = datetime.now()
         number = 0
         for section in sections :
             area = section[0]
@@ -146,10 +159,10 @@ class Magegun :
                         question = 'What '+ option +' you want to execute: '
                         _option = raw_input(question)
                         subprocess.call(command + ' ' + _option, shell=True)
-                        print color.GREEN + title.capitalize() + ' for ' + _option + ' ' + option + ' successful'
+                        print color.GREEN + title.capitalize() + ' for ' + _option + ' ' + option + ' successful' + color.BLUE + ' at %s:%s' % (now.hour, now.minute) + '\n'
                     else :
                         subprocess.call(command, shell=True)
-                        print color.GREEN + title.capitalize() + ' successful'
+                        print color.GREEN + title.capitalize() + ' successful' + color.BLUE + ' at %s:%s' % (now.hour, now.minute) + '\n'
 
-magegun = Magegun() 
+magegun = Magerun()
 magegun.run()
