@@ -5,8 +5,10 @@ Helper for Magento 2
 Get install file from [python.org](https://www.python.org/download/releases/2.7/)
 
 ###Set **PATH** enviroment
+Go to Control Panel > All Control Panel Items > System > Advanced System Settings <br>
+In the System Properties Window, Click Enviroment Variables > Edit **PATH** from **User variables** and add path below at the end of value string (separate by ';')
 ```
-PATH:=...;C\Python2.7
+C\Python27
 ```
 ###Setup <br>
 Copy **magerun.py** from **window\terminal** folder to python folder (**C\Python2.7**) <br>
