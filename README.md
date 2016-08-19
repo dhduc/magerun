@@ -40,3 +40,7 @@ magerun.py
 
 ##Custom
 You can change its name depend on your mind 
+
+##Screenshot
+Main Menu <br>
+![](screenshot/magerun.pngraw=true)
