@@ -43,4 +43,4 @@ You can change its name depend on your mind
 
 ##Screenshot
 Main Menu <br>
-![](screenshot/magerun.pngraw=true)
+![](screenshot/magerun.png?raw=true)
