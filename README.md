@@ -1,5 +1,7 @@
 #MAGERUN
 Helper for Magento 2
+## Feature
+- Optimize task for excute magento 2 console command 
 ## For Window
 ###Install **python 2.7** <br>
 Get install file from [python.org](https://www.python.org/download/releases/2.7/)
