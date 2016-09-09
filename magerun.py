@@ -39,6 +39,19 @@ class Magerun :
                 ]
             ],
             [
+                'git', 
+                [
+                    ['git pull', 'git pull', ''],
+                    ['git status', 'git status', ''],
+                    ['git difference', 'git diff', ''],
+                    ['git reset stash', 'git checkout -- .', ''],
+                    ['git add all', 'git add -A .', ''],
+                    ['git commit', 'git commit', ''],
+                    ['git show last commit', 'git show', ''],
+                    ['git push', 'git push', '']
+                ]
+            ],
+            [
                 'database',
                 [
                     ['enable module', 'php bin/magento module:enable', 'module'],
