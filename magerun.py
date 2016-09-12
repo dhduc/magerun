@@ -33,6 +33,9 @@ class Magerun :
             [
                 'server', 
                 [
+                    ['update system', 'sudo apt-get update', ''],
+                    ['upgrade system', 'sudo apt-get upgrade', ''],
+                    ['install package', 'sudo apt-get install', 'package'],
                     ['restart fpm service', 'sudo service php7.0-fpm restart', ''],
                     ['restart apache server', 'sudo service apache2 restart', ''],
                     ['restart nginx server', 'sudo service nginx restart', '']
