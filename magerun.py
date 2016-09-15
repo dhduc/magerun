@@ -43,7 +43,7 @@ class Magerun :
             [
                 'deploy',
                 [
-                    ['remove generated files in var/ folder', 'rm -rf var/cache var/generation var/page_cache var/tmp var/view_preprocessed', ''],
+                    ['remove generated files in var/ folder', 'rm -rf var/cache var/di var/generation var/page_cache var/tmp var/view_preprocessed', ''],
                     ['remove all pub/static files', 'rm -rf pub/static', ''],
                     ['deploy static content', 'php bin/magento setup:static-content:deploy', 'locale']
                 ]
