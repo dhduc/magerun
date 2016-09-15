@@ -35,9 +35,8 @@ class Magerun :
                 [
                     ['enable module', 'php bin/magento module:enable', 'module'],
                     ['disable module', 'php bin/magento disable:enable', 'module'],
-                    ['enable all module', 'php bin/magento module:enable --all --clear-static-content', ''],
                     ['setup upgrade schema', 'php bin/magento setup:upgrade', ''],
-                    ['compile DI', 'php bin/magento setup:di:compile-multi-tenant', '']
+                    ['compile dependency injection', 'php bin/magento setup:di:compile-multi-tenant', '']
                 ]
             ],
             [
