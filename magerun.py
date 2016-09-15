@@ -31,30 +31,6 @@ class Magerun :
     def init(self) :
         sections = [
             [
-                'server', 
-                [
-                    ['update system', 'sudo apt-get update', ''],
-                    ['upgrade system', 'sudo apt-get upgrade', ''],
-                    ['install package', 'sudo apt-get install', 'package'],
-                    ['restart fpm service', 'sudo service php7.0-fpm restart', ''],
-                    ['restart apache server', 'sudo service apache2 restart', ''],
-                    ['restart nginx server', 'sudo service nginx restart', '']
-                ]
-            ],
-            [
-                'git', 
-                [
-                    ['git pull', 'git pull', ''],
-                    ['git status', 'git status', ''],
-                    ['git difference', 'git diff', ''],
-                    ['git reset stash', 'git checkout -- .', ''],
-                    ['git add all', 'git add -A .', ''],
-                    ['git commit', 'git commit', ''],
-                    ['git show last commit', 'git show', ''],
-                    ['git push', 'git push', '']
-                ]
-            ],
-            [
                 'database',
                 [
                     ['enable module', 'php bin/magento module:enable', 'module'],
@@ -67,8 +43,8 @@ class Magerun :
             [
                 'deploy',
                 [
-                    ['remove generated files in var folder', 'rm -rf var/cache var/generation var/page_cache var/tmp var/view_preprocessed', ''],
-                    ['remove all static files', 'rm -rf pub/static', ''],
+                    ['remove generated files in var/ folder', 'rm -rf var/cache var/generation var/page_cache var/tmp var/view_preprocessed', ''],
+                    ['remove all pub/static files', 'rm -rf pub/static', ''],
                     ['deploy static content', 'php bin/magento setup:static-content:deploy', 'locale']
                 ]
             ],
