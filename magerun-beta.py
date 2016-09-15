@@ -77,13 +77,13 @@ class Magerun :
         parser = optparse.OptionParser()
         parser.add_option('-i', '--install', dest='install', help='Install Magerun')
         (options, args) = parser.parse_args()
-        if options.install is 'install' :
+        if options.install == 'install' :
             commands = [
-        		'sudo cp magerun.py /usr/bin/magerun',
-        		'sudo chmod u+x /usr/bin/magerun'
-        	]    
-        	for command in commands :
-        		subprocess.call(command, shell=True)
+                'sudo cp magerun.py /usr/bin/magerun',
+                'sudo chmod u+x /usr/bin/magerun'
+            ]   
+            for command in commands :
+                subprocess.call(command, shell=True)
             
             print color.GREEN + 'Install Magerun Successful'
             exit(0)
