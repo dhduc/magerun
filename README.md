@@ -15,8 +15,8 @@ In the System Properties Window, Click Environment Variables > Edit **PATH** fro
 C\Python27
 ```
 ###Setup <br>
-Copy **magerun.py** from **window\terminal** folder to python folder (**C\Python2.7**) <br>
-Using file correct with your terminal (**gitbash** or **cmder**) <br>
+Copy **magerun.py** to python folder (**C\Python2.7**) <br>
+Using file with bash terminal such as **gitbash**, **cmder**, **cygwin** <br>
 
 ###Usage <br>
 Just type **magerun.py** in the root folder of magento 2 project on your terminal
@@ -33,7 +33,7 @@ sudo chmod u+x magerun.py
 ```
 
 ###Usage <br>
-Just type **magerun.py** (or **magerun**) in the root folder of magento 2 project on your terminal
+Just type **magerun.py** in the root folder of magento 2 project on your terminal
 ```
 magerun.py
 ```
