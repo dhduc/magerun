@@ -75,23 +75,16 @@ class Magerun :
 
     def option(self) :
         parser = optparse.OptionParser()
-        parser.add_option('-i', '--install', dest='install', help='Install Magerun')
+        parser.add_option('-t', '--theme', dest='theme', help='Theme')
         (options, args) = parser.parse_args()
-        if options.install == 'install' :
-            commands = [
-                'sudo cp magerun.py /usr/bin/magerun',
-                'sudo chmod u+x /usr/bin/magerun'
-            ]   
-            for command in commands :
-                subprocess.call(command, shell=True)
-            
-            print color.GREEN + 'Install Magerun Successful'
-            exit(0)
-        	   
+        if options.theme is None :
+            self.theme = 'blank'
+        else :    
+            self.theme = options.theme    
+
     # Title
     def title(self) :
-    	version = '2.0'
-        print color.GREEN + 'Magento 2 Helper ' + color.LIGHTGRAY + 'version ' + color.YELLOW + version + color.ENDC
+        print color.GREEN + 'Magento 2 Helper ' + color.LIGHTGRAY + 'version ' + color.YELLOW + '1.0.1' + color.ENDC
         print color.BLUE + '@author ducdh' + color.ENDC
 
     # Menu

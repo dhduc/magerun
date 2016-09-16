@@ -4,6 +4,7 @@ import subprocess
 import optparse
 import string
 import os
+import os.path
 from datetime import datetime
 
 class color:
@@ -75,16 +76,35 @@ class Magerun :
 
     def option(self) :
         parser = optparse.OptionParser()
-        parser.add_option('-t', '--theme', dest='theme', help='Theme')
+        parser.add_option('-i', '--install', dest='install', help='Install Magerun')
         (options, args) = parser.parse_args()
-        if options.theme is None :
-            self.theme = 'blank'
-        else :    
-            self.theme = options.theme    
+        if options.install == 'install' :
+            current_file = os.path.basename(__file__)
+            file_path = '/usr/bin/' + current_file
+            isFileExist = os.path.exists(file_path)
+            removeCommand = 'sudo rm ' + file_path
+            copyCommand = 'sudo cp ' + current_file + ' ' + file_path
+            chmodCommand = 'sudo chmod u+x ' + file_path
+            commands = [
+	            copyCommand,
+	            chmodCommand
+	        ] 
+            if (isFileExist):
+                commands = [
+                    removeCommand,
+	                copyCommand,
+	                chmodCommand,
+	            ] 
+            for command in commands :
+                subprocess.call(command, shell=True)
 
+            print color.GREEN + 'Install Magerun Successful'
+            exit(0)
+        	   
     # Title
     def title(self) :
-        print color.GREEN + 'Magento 2 Helper ' + color.LIGHTGRAY + 'version ' + color.YELLOW + '1.0.1' + color.ENDC
+    	version = '2.0'
+        print color.GREEN + 'Magento 2 Helper ' + color.LIGHTGRAY + 'version ' + color.YELLOW + version + color.ENDC
         print color.BLUE + '@author ducdh' + color.ENDC
 
     # Menu
