@@ -23,7 +23,7 @@ Just type **magerun.py** in the root folder of magento 2 project on your termina
 ```
 magerun.py
 ``` 
-## For Ubuntu/Linux
+## For Ubuntu/Linux Mint
 Make sure that python installed on your OS <br>
 ###Setup <br> 
 Run commands below to setup magerun on your system 
