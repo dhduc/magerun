@@ -26,14 +26,10 @@ magerun.py
 ## For Ubuntu/Linux
 Make sure that python installed on your OS <br>
 ###Setup <br> 
-Copy **magerun.py** file to **/usr/bin/** folder <br>
-You can use it without file extension such as **/usr/bin/magerun** alternative **/usr/bin/magerun.py** because the system understands it's a python shell scripting.
+Run commands below to setup magerun on your system 
 ```
-sudo cp magerun.py /usr/bin/magerun.py
-```
-Grant executable permission
-```
-sudo chmod u+x /usr/bin/magerun.py
+sudo chmod u+x magerun.py
+./magerun.py -i install 
 ```
 
 ###Usage <br>
